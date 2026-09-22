@@ -17,6 +17,15 @@
 
 > **TL;DR** — Pipeline tái lập được để sàng lọc tin tuyển dụng tiếng Anh đáng ngờ. Dự án so sánh **26 cấu hình BoW/TF-IDF/GloVe** với **TextCNN**, chống rò rỉ giữa các tin trùng nội dung, chọn ngưỡng trên validation và chỉ mở test một lần. Kết quả tốt nhất: **TF-IDF bigram + Linear SVM**, đạt **F1 lớp gian lận 0.5507** và **Average Precision 0.5348**.
 
+## Các đường link
+
+| Tài nguyên | Liên kết |
+|---|---|
+| Mã nguồn GitHub | [duty00/job-scam-dectection](https://github.com/duty00/job-scam-dectection) |
+| Notebook chạy trực tiếp | [Mở bằng Google Colab](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb) |
+| Báo cáo PDF | [Report.pdf](reports/Report.pdf) |
+| Nguồn LaTeX | [Overleaf](https://www.overleaf.com/project/6aaa50614095f851ad080bca) |
+
 ## Thông tin học phần
 
 | Hạng mục | Thông tin |

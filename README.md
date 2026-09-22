@@ -24,7 +24,7 @@
 | Mã nguồn GitHub | [duty00/job-scam-dectection](https://github.com/duty00/job-scam-dectection) |
 | Notebook chạy trực tiếp | [Mở bằng Google Colab](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb) |
 | Báo cáo PDF | [Report.pdf](reports/Report.pdf) |
-| Bản xem LaTeX | [Overleaf — chỉ xem](https://www.overleaf.com/read/ggpwhcvjjbbc#67a3fb) |
+| Bản xem LaTeX | [Overleaf](https://www.overleaf.com/read/ggpwhcvjjbbc#67a3fb) |
 
 ## Thông tin học phần
 

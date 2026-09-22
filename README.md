@@ -9,12 +9,41 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.14-EE4C2C?logo=pytorch&logoColor=white)](#textcnn)
 [![Tests](https://img.shields.io/badge/tests-7%20passed-2EA44F)](#kiểm-chứng)
 [![Best F1](https://img.shields.io/badge/best%20test%20F1-0.5507-7C3AED)](#kết-quả)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb)
 
 *Bài tập lớn môn Học máy · Khoa KH&KT Máy tính · ĐHQG-HCM*
 
 </div>
 
 > **TL;DR** — Pipeline tái lập được để sàng lọc tin tuyển dụng tiếng Anh đáng ngờ. Dự án so sánh **26 cấu hình BoW/TF-IDF/GloVe** với **TextCNN**, chống rò rỉ giữa các tin trùng nội dung, chọn ngưỡng trên validation và chỉ mở test một lần. Kết quả tốt nhất: **TF-IDF bigram + Linear SVM**, đạt **F1 lớp gian lận 0.5507** và **Average Precision 0.5348**.
+
+## Thông tin học phần
+
+| Hạng mục | Thông tin |
+|---|---|
+| Học phần | Học máy — Bài 2: Dữ liệu văn bản |
+| Mã môn | **Cần bổ sung trước khi nộp** |
+| Học kỳ / năm học | Học kỳ I, 2026–2027 |
+| Giảng viên hướng dẫn | TS. Trương Vĩnh Lân |
+| Lớp / nhóm | A01 / 01 |
+
+### Mục tiêu bài tập
+
+1. Khám phá và xây dựng pipeline phân loại tin tuyển dụng lừa đảo từ dữ liệu văn bản.
+2. So sánh Bag-of-Words, TF-IDF, GloVe pooling và mô hình học sâu TextCNN theo cùng giao thức thực nghiệm.
+3. Kiểm soát rò rỉ dữ liệu, đánh giá bằng các metric phù hợp dữ liệu mất cân bằng và phân tích lỗi dự đoán.
+4. Tạo notebook có thể chạy lại từ đầu trên Google Colab cùng source, artifacts và báo cáo kỹ thuật.
+
+### Thông tin thành viên
+
+> **Cần điền email trước khi nộp.** Không tự suy đoán hoặc công khai email cá nhân khi chưa được nhóm cung cấp.
+
+| Họ và tên | MSSV | Email |
+|---|---:|---|
+| Dương Lê Nhật Duy | 2352171 | Cần bổ sung |
+| Trần Thiên Lộc | 2352715 | Cần bổ sung |
+| Nguyễn Huy Phúc | 2352937 | Cần bổ sung |
+| Đinh Đoàn Vy | 2353350 | Cần bổ sung |
 
 ## Điểm nổi bật
 
@@ -121,7 +150,7 @@ python run_deep_learning.py
 
 ### Google Colab
 
-1. Upload [`notebooks/Job_Scam_Detection.ipynb`](notebooks/Job_Scam_Detection.ipynb) vào Colab.
+1. Bấm nút **Open in Colab** phía trên, hoặc upload [`notebooks/Job_Scam_Detection.ipynb`](notebooks/Job_Scam_Detection.ipynb) vào Colab.
 2. Chọn **Runtime → Run all**.
 3. Xem EDA, bảng điểm, biểu đồ và demo dự đoán ở cuối notebook.
 

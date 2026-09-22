@@ -1,0 +1,9 @@
+{
+  "name": "glove-wiki-gigaword-50",
+  "url": "https://github.com/RaRe-Technologies/gensim-data/releases/download/glove-wiki-gigaword-50/glove-wiki-gigaword-50.gz",
+  "md5": "c289bc5d7f2f02c6dc9f2f9b67641813",
+  "dimensions": 50,
+  "words": 400000,
+  "frozen": true,
+  "reference": "https://nlp.stanford.edu/projects/glove/"
+}

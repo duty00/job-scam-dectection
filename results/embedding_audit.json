@@ -1,0 +1,7 @@
+{
+  "max_tokens": 1500,
+  "truncated_documents": 17,
+  "mean_known_token_fraction": 0.9628456234931946,
+  "zero_vector_documents": 0,
+  "pooling": "L2-normalized arithmetic mean and train-IDF-weighted mean"
+}

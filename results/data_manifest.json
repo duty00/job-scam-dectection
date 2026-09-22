@@ -1,0 +1,11 @@
+{
+  "url": "https://www.kaggle.com/api/v1/datasets/download/shivamb/real-or-fake-fake-jobposting-prediction",
+  "paper": "https://doi.org/10.3390/fi9010006",
+  "csv_sha256": "59253295129d8b6a27607f9904f7d4ddf4dbb0ee35e079c7eb51b58b5e62bf60",
+  "rows": 17880,
+  "label_counts": {
+    "0": 17014,
+    "1": 866
+  },
+  "data_scope": "English job ads, 2012-2014; EMSCAD mirror on Kaggle"
+}

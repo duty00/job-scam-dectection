@@ -1,0 +1,32 @@
+{
+  "selected_candidate": 9,
+  "demo_candidate": 12,
+  "family_champions": [
+    9,
+    12,
+    0,
+    14,
+    21
+  ],
+  "selection_metric": "validation fraud F1 at validation-selected threshold; ties: average precision, candidate order",
+  "test_used_for_selection": false,
+  "selected_config": {
+    "candidate": 9,
+    "family": "tfidf_svm",
+    "representation": "tfidf_bi",
+    "params": "{\"C\": 2.0, \"class_weight\": \"balanced\"}",
+    "threshold": -0.36741327219823394,
+    "fit_seconds": 1.5558560999925248,
+    "warnings": "",
+    "accuracy": 0.9744881889763779,
+    "precision_fraud": 0.7313432835820896,
+    "recall_fraud": 0.6853146853146853,
+    "f1_fraud": 0.7075812274368231,
+    "average_precision": 0.7264732041046417,
+    "roc_auc": 0.9300261084561876,
+    "tn": 2996,
+    "fp": 36,
+    "fn": 45,
+    "tp": 98
+  }
+}

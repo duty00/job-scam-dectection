@@ -1,0 +1,60 @@
+{
+  "row_alignment": "All feature rows follow data/processed/split_manifest.csv and job_ids.npy",
+  "split_manifest_sha256": "e4f3b71a0e0564a0d66bb76563cf811b72c55de0736c1eb6056e554581aff153",
+  "timing": {
+    "bow": {
+      "seconds": 10.49695509999583,
+      "shape": [
+        15872,
+        32287
+      ],
+      "fit": "train"
+    },
+    "tfidf_uni": {
+      "seconds": 10.786990399996284,
+      "shape": [
+        15872,
+        32287
+      ],
+      "fit": "train"
+    },
+    "tfidf_bi": {
+      "seconds": 23.03464040000108,
+      "shape": [
+        15872,
+        40000
+      ],
+      "fit": "train"
+    },
+    "tfidf_bi_stop": {
+      "seconds": 20.641259900003206,
+      "shape": [
+        15872,
+        40000
+      ],
+      "fit": "train"
+    },
+    "glove": {
+      "seconds": 15.124549799991655,
+      "shape": [
+        15872,
+        50
+      ],
+      "fit": "Frozen pretrained vectors; IDF pooling weights train only"
+    }
+  },
+  "files": {
+    "bow.npz": "b265a647e800cef7155be900f9deeb51d52ff824a5aa92e16429c8c5bb80fb84",
+    "glove_coverage.npy": "ec94b31d3d0154500dd8875b068c2436f31322c3989e246b61298ff56c6b4ff0",
+    "glove_idf.npy": "6dc5d1e53b52e1d97dc9f4c587de02a8dd629a134a3a1fcb6eb282755851adef",
+    "glove_mean.npy": "5ada23e81e1fb114e4c9525282abe68d052dec76875472c00750409f3e9e4b4a",
+    "glove_pooling.json": "f7d743c05c5cc1fa6f1bea880fed85ab9169c8a5ee377cff4803f3c3a701353b",
+    "job_ids.npy": "f3a15da407803efafe49817a6b5f382219f96b437cd9f501dd779f238ec93ada",
+    "labels.npy": "93c3b92f8ac2d08492310f4962c700fa14c81ec881e499be6e1aefc471b1ef0e",
+    "README.md": "4e80cc9822fb135c8485a25361c38ddced925bddd986c91a8026a012b986a5fe",
+    "splits.npy": "b46daa4e1368b7035837f3c32864b382001522c487de325ad8d88d3dfb386539",
+    "tfidf_bi.npz": "5ac5e2e2527be47eef1aa03bf84a7f12c7334f2fed77b404144fbd9918507635",
+    "tfidf_bi_stop.npz": "2a3bb069b664a9b6e96f2ed239c05042c896bf66935e2deb4496d48f47948963",
+    "tfidf_uni.npz": "3fd0d842ca1f4eefafa3ea829f8de545035a356a78a723c14ba2681a8b3192ee"
+  }
+}

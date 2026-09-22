@@ -1,0 +1,12 @@
+{
+  "raw_majority_accuracy": 0.9515659955257271,
+  "train_word_length_quantiles": {
+    "0.0": 2.0,
+    "0.25": 246.25,
+    "0.5": 372.0,
+    "0.75": 507.0,
+    "0.95": 762.0,
+    "1.0": 2118.0
+  },
+  "note": "Raw EDA is structural only; text frequencies and length analysis use train only."
+}

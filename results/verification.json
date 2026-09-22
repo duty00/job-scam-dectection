@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "semantic_and_artifact_tests": 6,
+  "standalone_notebook_code_cells": 9,
+  "fresh_notebook_metrics_match_cli": true,
+  "fresh_notebook_features_match_cli": true,
+  "actual_google_colab_execution": false,
+  "report_pdf_created": true,
+  "models": {
+    "bow_nb": {
+      "exists": true
+    },
+    "tfidf_lr": {
+      "exists": true
+    },
+    "tfidf_svm": {
+      "exists": true
+    },
+    "glove_lr": {
+      "exists": true
+    },
+    "glove_svm": {
+      "exists": true
+    }
+  },
+  "source_sha256": {
+    "modules/config.py": "08b3a291474ce7d3122ccf0d7d4f94d56ebabc078ba128e138513ab42eb5bcf3",
+    "modules/data.py": "dec1c19eaf5dea8c4fa853b35a1b60b09daba96cb2ea2a52897a4a98e5fec7f2",
+    "modules/eda.py": "c37b86aab0ac0351bc84d42450a91ab13fe110b672baf884f47c8f8b2fa1f721",
+    "modules/embeddings.py": "c122d5fdc450fe422623d611a6680d835cac29c8e1dcf3d90210075ae79a4f99",
+    "modules/evaluation.py": "e386e5798556d7957f1d59af5af8df7415ec48c3974ca18f53fe06fe0a6ebdda",
+    "modules/experiment.py": "6b21aa9c41f7b57a61ac3057f8e8f9bb2354f8904c27b2a471c616aba39a6e11",
+    "modules/inference.py": "217b5ee2a2b1caa29aca6ff610c526e2a8872f09e8fae81aaf4c8c9542c7f2c7",
+    "modules/__init__.py": "9b1b93b8573ed2764a128a7fdfb4b90e25dc5b27751fa0b8570ac8f8821bec82"
+  }
+}

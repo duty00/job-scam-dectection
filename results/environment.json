@@ -1,0 +1,21 @@
+{
+  "python": "3.14.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "packages": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2",
+    "joblib": "1.6.0"
+  },
+  "config": {
+    "seed": 42,
+    "max_features": 40000,
+    "min_df": 2,
+    "group_min_chars": 80,
+    "max_tokens": 1500,
+    "root": "D:\\ML"
+  },
+  "protocol": "Train fit; validation model/threshold selection; locked test."
+}

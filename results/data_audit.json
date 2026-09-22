@@ -1,0 +1,20 @@
+{
+  "raw_rows": 17880,
+  "empty_text_rows_removed": 0,
+  "conflicting_label_rows_removed": 0,
+  "duplicate_text_rows_removed": 2008,
+  "clean_rows": 15872,
+  "groups": 4699,
+  "largest_group": 495,
+  "group_rule": "Exact normalized description OR company_profile with >=80 chars; transitive union. Not complete near-duplicate or verified-company isolation.",
+  "split_counts": {
+    "test": 3175,
+    "train": 9522,
+    "validation": 3175
+  },
+  "fraud_counts": {
+    "test": 143,
+    "train": 427,
+    "validation": 143
+  }
+}

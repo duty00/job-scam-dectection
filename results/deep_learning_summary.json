@@ -1,0 +1,54 @@
+{
+  "parameters": {
+    "architecture": "TextCNN",
+    "embedding_trainable": true,
+    "embedding_dim": 100,
+    "channels_per_kernel": 96,
+    "kernel_sizes": [
+      3,
+      4,
+      5
+    ],
+    "dropout": 0.5,
+    "max_length": 300,
+    "vocabulary_size": 30000,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "maximum_epochs": 6,
+    "selected_epoch": 6,
+    "selection": "validation fraud F1; tie-break validation AP then earlier epoch",
+    "threshold_source": "validation",
+    "test_used_for_selection": false,
+    "device": "cpu",
+    "torch_version": "2.14.0",
+    "seed": 42,
+    "elapsed_seconds": 176.57784910002374
+  },
+  "validation": {
+    "epoch": 6,
+    "train_loss": 0.17953384399414063,
+    "threshold": 0.6019405126571655,
+    "accuracy": 0.9640944881889764,
+    "precision_fraud": 0.6283185840707964,
+    "recall_fraud": 0.4965034965034965,
+    "f1_fraud": 0.5546875,
+    "average_precision": 0.5659201375080913,
+    "roc_auc": 0.8892443308670221,
+    "tn": 2990,
+    "fp": 42,
+    "fn": 72,
+    "tp": 71
+  },
+  "test": {
+    "accuracy": 0.9574803149606299,
+    "precision_fraud": 0.5377358490566038,
+    "recall_fraud": 0.3986013986013986,
+    "f1_fraud": 0.4578313253012048,
+    "average_precision": 0.4890123964424516,
+    "roc_auc": 0.8727973873092606,
+    "tn": 2983,
+    "fp": 49,
+    "fn": 86,
+    "tp": 57
+  }
+}

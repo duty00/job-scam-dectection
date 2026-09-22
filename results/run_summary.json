@@ -1,0 +1,31 @@
+{
+  "elapsed_seconds": 146.82554030000756,
+  "selected_candidate": 9,
+  "demo_candidate": 12,
+  "test_rows": 3175,
+  "test_fraud": 143,
+  "selected_test_result": {
+    "candidate": 9,
+    "family": "tfidf_svm",
+    "representation": "tfidf_bi",
+    "threshold": -0.36741327219823394,
+    "selected_on_validation": true,
+    "accuracy": 0.9609448818897638,
+    "precision_fraud": 0.5714285714285714,
+    "recall_fraud": 0.5314685314685315,
+    "f1_fraud": 0.5507246376811594,
+    "average_precision": 0.5348069672940968,
+    "roc_auc": 0.8653223425650867,
+    "tn": 2975,
+    "fp": 57,
+    "fn": 67,
+    "tp": 76
+  },
+  "limitations": [
+    "Historical English dataset; no Vietnamese evaluation.",
+    "Exact profile/description grouping is not verified employer separation and does not catch all paraphrases.",
+    "GloVe average pooling loses word order and negation context.",
+    "Validation is used for both hyperparameters and thresholds; no nested cross-validation.",
+    "No claim of real-world fraud verification or calibrated probabilities."
+  ]
+}

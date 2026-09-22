@@ -1,0 +1,10 @@
+{
+  "local_notebook_run_all": true,
+  "errors": [],
+  "elapsed_seconds": 277.21431349997874,
+  "python": "3.14.4 (tags/v3.14.4:23116f9, Apr  7 2026, 14:10:54) [MSC v.1944 64 bit (AMD64)]",
+  "fresh_workspace": "D:\\ML\\tmp\\notebook_validation\\work_jm14z4jx",
+  "actual_google_colab_execution": false,
+  "code_cells": 10,
+  "executed_code_cells": 10
+}

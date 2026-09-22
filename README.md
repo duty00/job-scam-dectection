@@ -1,126 +1,189 @@
-# Phát hiện tin tuyển dụng có dấu hiệu lừa đảo
+<div align="center">
 
-**Bài 2 - Dữ liệu văn bản | Môn Học máy | Học kỳ I, 2026-2027**  
-Khoa Khoa học và Kỹ thuật Máy tính, Trường Đại học Bách Khoa, ĐHQG-HCM.
+# 🛡️ Job Scam Detection
 
-Dự án so sánh BoW/TF-IDF với embedding GloVe huấn luyện sẵn để phân loại tin tuyển dụng tiếng Anh trong EMSCAD. Có EDA, 26 cấu hình truyền thống, kiểm soát nhóm trùng nội dung, ngưỡng cảnh báo chọn trên validation và demo giải thích bằng mô hình tuyến tính. Phần mở rộng TextCNN học embedding end-to-end được dùng để so sánh pipeline deep learning với mô hình truyền thống.
+### NLP pipeline phát hiện tin tuyển dụng có dấu hiệu lừa đảo
 
-## Bắt đầu
+[![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)](#quickstart)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-1.9-F7931E?logo=scikitlearn&logoColor=white)](#mô-hình)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.14-EE4C2C?logo=pytorch&logoColor=white)](#textcnn)
+[![Tests](https://img.shields.io/badge/tests-7%20passed-2EA44F)](#kiểm-chứng)
+[![Best F1](https://img.shields.io/badge/best%20test%20F1-0.5507-7C3AED)](#kết-quả)
 
-### Google Colab
+*Bài tập lớn môn Học máy · Khoa KH&KT Máy tính · ĐHQG-HCM*
 
-1. Mở `notebooks/Job_Scam_Detection.ipynb` bằng Colab: **File → Upload notebook**.
-2. Chọn **Runtime → Run all**. GPU không bắt buộc nhưng giúp TextCNN chạy nhanh hơn.
-3. Xem bảng kết quả và nhập một tin tuyển dụng tiếng Anh vào demo cuối notebook.
-4. ZIP của lần chạy nằm trong `job_scam_project/output/` ở thanh Files.
+</div>
 
-Notebook mang theo bản module nguồn có SHA-256 và tự tải dữ liệu/GloVe từ nguồn công khai. Không cần mount Drive, tài khoản Kaggle, khóa API hay upload module riêng. Mạng Internet cần hoạt động. Nếu nguồn công khai gián đoạn, code báo lỗi và không thay bằng dữ liệu giả.
+> **TL;DR** — Pipeline tái lập được để sàng lọc tin tuyển dụng tiếng Anh đáng ngờ. Dự án so sánh **26 cấu hình BoW/TF-IDF/GloVe** với **TextCNN**, chống rò rỉ giữa các tin trùng nội dung, chọn ngưỡng trên validation và chỉ mở test một lần. Kết quả tốt nhất: **TF-IDF bigram + Linear SVM**, đạt **F1 lớp gian lận 0.5507** và **Average Precision 0.5348**.
 
-Thời gian phụ thuộc CPU và tốc độ mạng; xem `results/run_summary.json` của lần chạy thực tế. Bộ nguồn tải gồm khoảng 69 MB vector GloVe nén và CSV tuyển dụng; RAM sử dụng chủ yếu cho từ điển GloVe và ma trận thưa. Không chuyển toàn bộ TF-IDF thành ma trận dense.
+## Điểm nổi bật
+
+| | |
+|---|---|
+| 📦 **Dữ liệu có kiểm toán** | EMSCAD gồm 17.880 tin; loại 2.008 bản sao văn bản chính xác trước khi chia tập. |
+| 🛡️ **Chống leakage** | Gom nhóm liên thông theo `description`/`company_profile` đã chuẩn hóa, rồi chia bằng `StratifiedGroupKFold`. |
+| 🧪 **Thực nghiệm có kỷ luật** | Vocabulary, IDF, scaler và ngưỡng chỉ fit/chọn trên train + validation; test không tham gia chọn mô hình. |
+| 🧠 **So sánh công bằng** | BoW, TF-IDF, GloVe pooling và TextCNN cùng dùng một giao thức dữ liệu, seed và metric. |
+| 🔎 **Có thể giải thích** | Demo tuyến tính hiển thị các cụm từ đóng góp vào điểm dự đoán. |
+| ✅ **Có thể chạy lại** | Notebook độc lập, manifest/checksum, artifacts, unit tests và script đóng gói. |
+
+## Kết quả
+
+Sau khi khóa cấu hình và ngưỡng **trên validation**, test được mở đúng một lần: 3.175 tin, trong đó 143 tin gian lận.
+
+| Hạng | Biểu diễn + mô hình | Precision | Recall | F1 gian lận | AP | ROC-AUC |
+|:--:|---|--:|--:|--:|--:|--:|
+| 🥇 | **TF-IDF bigram + Linear SVM** | **0.5714** | **0.5315** | **0.5507** | **0.5348** | **0.8653** |
+| 🧠 | TextCNN | 0.5377 | 0.3986 | 0.4578 | 0.4890 | 0.8728 |
+
+**Mô hình tốt nhất:** 76 TP · 57 FP · 67 FN · 2.975 TN. Accuracy không phải metric chính vì dữ liệu mất cân bằng; trọng tâm là **F1 lớp gian lận** và **Average Precision**.
+
+<p align="center">
+  <img src="results/figures/04_model_comparison.png" alt="So sánh mô hình" width="48%" />
+  <img src="results/figures/03_precision_recall.png" alt="Precision-recall curves" width="48%" />
+</p>
+
+## Pipeline
+
+```mermaid
+flowchart LR
+    A[EMSCAD<br/>17,880 postings] --> B[HTML decode · normalize<br/>URL/email tokenization]
+    B --> C[Remove exact duplicates<br/>17,880 → 15,872]
+    C --> D[Group similar content<br/>prevent split leakage]
+    D --> E[Train / Validation / Test<br/>9,522 / 3,175 / 3,175]
+    E --> F[BoW · TF-IDF · GloVe<br/>26 configurations]
+    E --> G[TextCNN<br/>trainable embedding]
+    F --> H[Select threshold on validation]
+    G --> H
+    H --> I[One locked test evaluation]
+    I --> J[Metrics · PR curve · errors<br/>artifacts · explanation demo]
+```
+
+| Tập | Số mẫu | Số gian lận | Mục đích |
+|---|--:|--:|---|
+| Train | 9.522 | 427 | Fit vocabulary/IDF/scaler và huấn luyện |
+| Validation | 3.175 | 143 | Chọn cấu hình, epoch và ngưỡng |
+| Test | 3.175 | 143 | Đánh giá cuối sau khi khóa quyết định |
+
+Văn bản ghép từ `title`, `company_profile`, `description`, `requirements`, `benefits`. Các cột `fraudulent`, `job_id` và dự đoán có sẵn **không** được đưa vào đặc trưng.
+
+## Mô hình
+
+| Họ biểu diễn | Cấu hình | Bộ phân loại |
+|---|---|---|
+| Bag-of-Words | unigram, `alpha ∈ {0.1, 1.0}` | Multinomial Naive Bayes |
+| TF-IDF | unigram/bigram, có/không stopwords | Logistic Regression, Linear SVM (`C ∈ {0.5, 2.0}`) |
+| GloVe | frozen 50D, mean/train-IDF pooling | Logistic Regression, Linear SVM (`C ∈ {0.1, 1, 10}`) |
+
+- Tổng cộng **26 cấu hình** truyền thống.
+- Candidate thắng validation: **TF-IDF bigram + Linear SVM**, `C=2`, `class_weight="balanced"`.
+- Ngưỡng tối ưu trên validation; tie-break dùng AP rồi thứ tự candidate cố định.
+
+### TextCNN
+
+TextCNN là benchmark học sâu mở rộng, không được dùng để che kết quả mô hình truyền thống.
+
+| Thành phần | Cấu hình |
+|---|---|
+| Vocabulary | 30.000 token, xây dựng **chỉ từ train** |
+| Input | 300 token, padding/truncation cố định |
+| Embedding | 100 chiều, trainable |
+| Convolution | kernels 3/4/5, mỗi kernel 96 channels |
+| Head | global max pooling → dropout 0.5 → sigmoid |
+| Training | AdamW, LR 0.001, batch 128, seed 42 |
+| Selection | epoch 6, threshold 0.6019 từ validation |
+
+TextCNN đạt F1 0.4578, thấp hơn TF-IDF + Linear SVM ở lần chạy hiện tại. Kết luận này được giữ nguyên thay vì chọn lại sau khi nhìn test.
+
+<p align="center">
+  <img src="results/figures/05_textcnn_training.png" alt="Lịch sử huấn luyện TextCNN" width="70%" />
+</p>
+
+## Quickstart
 
 ### Chạy local
 
-Python 3.12+ được khuyến nghị. Các thư viện tương thích được khai báo trong `requirements.txt`; phiên bản chính xác của môi trường kiểm tra được lưu trong `requirements-lock.txt` và `results/environment.json`.
+Yêu cầu Python 3.12+ và Internet lần đầu chạy để tải EMSCAD/GloVe. GPU không bắt buộc.
 
-```bash
+```powershell
+git clone https://github.com/duty00/job-scam-dectection.git
+cd job-scam-dectection
+
 python -m venv .venv
-# Windows PowerShell:
 .venv\Scripts\Activate.ps1
-# Linux/macOS: source .venv/bin/activate
 python -m pip install -r requirements.txt
 python run_experiments.py
+
+# Benchmark deep learning (tùy chọn)
 python -m pip install -r requirements-deep-learning.txt
 python run_deep_learning.py
+```
+
+### Google Colab
+
+1. Upload [`notebooks/Job_Scam_Detection.ipynb`](notebooks/Job_Scam_Detection.ipynb) vào Colab.
+2. Chọn **Runtime → Run all**.
+3. Xem EDA, bảng điểm, biểu đồ và demo dự đoán ở cuối notebook.
+
+Notebook tự mang module nguồn kèm SHA-256; không cần mount Drive, Kaggle credentials hay upload thêm source. Thời gian chạy thực tế nằm trong [`results/run_summary.json`](results/run_summary.json).
+
+## Kiểm chứng
+
+```powershell
+# Unit tests cho pipeline
 python -m unittest discover -s tests -v
+
+# Sinh và chạy notebook sạch
 python tools/build_notebook.py
+python tools/execute_notebook.py
+
+# Kiểm tra artifacts, metrics và đóng gói
+python tools/validate.py
 python tools/package.py
 ```
 
-Mỗi lần `run_experiments.py` chạy lại huấn luyện và ghi đè kết quả trong `results/`, `features/`, `models/`. Tải dữ liệu và đọc GloVe có cache. Dùng `--root <thư_mục_khác>` để giữ kết quả cũ.
+Lần kiểm tra đã lưu chạy đủ **7/7 unit tests** và notebook clean **10/10 code cells**.
 
-## Thiết kế thí nghiệm
-
-| Thành phần | Cách làm |
+| Artifact | Nội dung |
 |---|---|
-| Dữ liệu | EMSCAD, 17.880 tin, nhãn 0 hợp lệ / 1 gian lận |
-| Văn bản đầu vào | title, company_profile, description, requirements, benefits |
-| Làm sạch | HTML decode, bỏ thẻ, chuẩn hóa khoảng trắng/chữ thường, thay URL/email bằng token; giữ từ phủ định |
-| Trùng lặp | Loại bản sao văn bản chính xác và nhóm văn bản có nhãn mâu thuẫn |
-| Chia nhóm | Description hoặc company_profile chuẩn hóa trùng nhau, dài tối thiểu 80 ký tự; nối nhóm bắc cầu |
-| Chia tập | StratifiedGroupKFold cố định seed; mục tiêu xấp xỉ 60/20/20, xem tỷ lệ thực tế trong audit |
-| BoW | Unigram + MultinomialNB, alpha 0.1/1.0 |
-| TF-IDF | Unigram/bigram, có/không English stopwords; LR và Linear SVM, C 0.5/2.0 |
-| GloVe | Frozen 50 chiều; mean pooling / train-IDF pooling; LR và Linear SVM, C 0.1/1/10 |
-| Deep learning | TextCNN với embedding học được, convolution kernel 3/4/5, global max pooling và dropout |
-| Lựa chọn | F1 gian lận trên validation, ngưỡng chọn trên validation; tie-break AP rồi thứ tự cấu hình |
-| Test | Chỉ đánh giá các cấu hình đã khóa; không chọn lại mô hình sau khi thấy test |
-| Demo | TF-IDF + LR tốt nhất trên validation; có thể khác mô hình tốt nhất tổng thể |
+| [`results/data_manifest.json`](results/data_manifest.json) | Nguồn dữ liệu, checksum, thống kê nhãn gốc |
+| [`results/data_audit.json`](results/data_audit.json) | Dòng bị loại, nhóm trùng và tỷ lệ split |
+| [`results/validation_scores.csv`](results/validation_scores.csv) | Điểm và thời gian fit của mọi cấu hình |
+| [`results/selection.json`](results/selection.json) | Candidate/ngưỡng đã khóa trước test |
+| [`results/test_scores.csv`](results/test_scores.csv) | Chỉ số test và TP/FP/FN/TN |
+| [`results/deep_learning_summary.json`](results/deep_learning_summary.json) | Tham số và kết quả TextCNN |
 
-Không dùng `fraudulent`, `job_id`, kết quả dự đoán hoặc thông tin từ nhãn làm đặc trưng. Từ điển BoW/TF-IDF, IDF và scaler chỉ fit bằng train. GloVe pretrained được cố định; việc đọc embedding không huấn luyện trên test. Không SMOTE hay cân bằng lại tập test.
-
-Trong lần chạy hiện tại, TextCNN chọn epoch 6 và ngưỡng 0,6019 trên validation. Trên test khóa, mô hình đạt F1 gian lận 0,4578 và AP 0,4890, thấp hơn TF-IDF + Linear SVM (F1 0,5507; AP 0,5348). Kết quả này được giữ nguyên để báo cáo so sánh trung thực, không chọn lại theo test.
-
-Các cột có/không logo và câu hỏi không được sử dụng trong phiên bản text-only này. Bản trùng nội dung có thể gây kết quả quá lạc quan, vì vậy nhóm trùng được tách biệt giữa ba tập. Phương pháp này **không** bảo đảm tách mọi công ty thật hoặc phát hiện mọi tin viết lại.
-
-## Kết quả được lưu ở đâu?
-
-- `results/data_manifest.json`: nguồn, checksum và số lượng nhãn dữ liệu gốc.
-- `results/data_audit.json`: số dòng loại bỏ, nhóm và tỷ lệ chia tập thực tế.
-- `results/validation_scores.csv`: toàn bộ cấu hình và thời gian fit, cảnh báo hội tụ nếu có.
-- `results/selection.json`: lựa chọn được khóa trước test.
-- `results/test_scores.csv`: accuracy, precision/recall/F1 gian lận, average precision, ROC-AUC, TP/FP/FN/TN.
-- `results/test_predictions.csv`: dự đoán từng tin để tính lại chỉ số độc lập.
-- `results/deep_learning_scores.csv`: kết quả validation/test của TextCNN với ngưỡng chọn trên validation.
-- `results/deep_learning_history.csv`: loss và chỉ số validation theo epoch của TextCNN.
-- `results/errors/`: tin bị bỏ sót/cảnh báo nhầm, dùng để phân tích sau đánh giá.
-- `results/figures/`: EDA, precision-recall, confusion matrix và so sánh mô hình.
-- `features/`: embedding `.npy`, ma trận thưa `.npz`, nhãn/ID/split và checksum.
-- `models/`: mô hình local do dự án tạo. Chỉ load các file joblib tin cậy của chính lần chạy.
-
-Chỉ số chính là F1 của lớp gian lận và average precision. Accuracy của mô hình luôn đoán hợp lệ đã rất cao do mất cân bằng nhãn. AP được tính bằng `average_precision_score`, không đồng nhất với PR-AUC tích phân hình thang.
-
-## Cấu trúc
+## Cấu trúc repository
 
 ```text
-notebooks/    Notebook nguồn và bản đã thực thi khi có
-modules/      Xử lý dữ liệu, EDA, embedding, huấn luyện, đánh giá, demo
-features/     File đặc trưng và manifest thứ tự dòng
-models/       Các mô hình đã fit
-results/      Số liệu thật, biểu đồ, dự đoán và audit
-reports/      Báo cáo PDF và ghi chú bàn giao
-tests/        Kiểm tra leakage, ngưỡng, file đặc trưng và tính lại metrics
-tools/        Tạo notebook, kiểm tra và đóng gói
-data/         Dữ liệu tải và cache local; không bắt buộc đưa vào ZIP
+├── notebooks/       # Notebook gốc và notebook đã thực thi
+├── modules/         # Data · EDA · embeddings · training · evaluation · inference
+├── tests/           # Leakage, threshold, artifacts, recomputed metrics
+├── tools/           # Build notebook, execute, validate, package
+├── results/         # Bảng điểm, audit, biểu đồ và metadata lần chạy
+├── features/        # Manifest và vocabulary TextCNN
+├── reports/         # Báo cáo PDF (không version artifact nặng)
+├── run_experiments.py
+└── run_deep_learning.py
 ```
 
-## Phạm vi và giới hạn
+Raw data, vector GloVe, model đã fit, features lớn, ZIP và prediction per-row được bỏ khỏi Git để repo gọn. Pipeline tái tạo các artifact này khi chạy.
 
-1. Dữ liệu lịch sử tiếng Anh (2012-2014); chưa đo khả năng dùng cho tiếng Việt hoặc lừa đảo hiện nay.
-2. Nhãn dữ liệu có thể có sai sót; dự đoán không xác minh danh tính hay kết luận một tổ chức phạm pháp.
-3. GloVe mean pooling mất thứ tự từ/ngữ cảnh, tin dài bị cắt ở 1.500 token (có thống kê).
-4. Điều chỉnh tham số và ngưỡng trên cùng validation; không phải nested cross-validation.
-5. Điểm logistic dùng trong demo chưa được hiệu chuẩn; không diễn giải là xác suất gian lận ngoài thực tế.
-6. Cụm từ giải thích là đóng góp toán học trong mô hình, không phải bằng chứng hoặc quan hệ nhân quả.
-7. TextCNN là phần mở rộng deep learning; cần chạy trên Colab và dùng kết quả thực tế trước khi đưa chỉ số vào báo cáo.
+## Giới hạn và sử dụng có trách nhiệm
 
-## Thông tin học phần và cá nhân
+- Dữ liệu tiếng Anh lịch sử (2012–2014), chưa đánh giá cho tiếng Việt hay thị trường hiện tại.
+- Điểm mô hình là tín hiệu sàng lọc, **không** xác minh doanh nghiệp hoặc kết luận một tổ chức lừa đảo.
+- Group split giảm leakage từ văn bản tương tự, không đảm bảo tách tuyệt đối mọi công ty/tin viết lại.
+- GloVe pooling mất thứ tự từ; TextCNN hiện là benchmark nhỏ, chưa phải mô hình production.
+- Validation dùng để chọn hyperparameter lẫn threshold; chưa dùng nested cross-validation.
 
-- Tên môn: Học máy; mã môn: chưa được cung cấp.
-- Học kỳ I, năm học 2026-2027.
-- GVHD: TS. Trương Vĩnh Lân; lớp A01; nhóm 01.
-- Người thực hiện: 1 người theo yêu cầu; họ tên, MSSV, email chưa được cung cấp.
-- Phạm vi công việc dự kiến của người thực hiện: toàn bộ bài tập. Không giả lập thành viên hay minh chứng họp nhóm.
-- Đề gốc quy định nhóm 2-3 thành viên; cần thống nhất việc nộp cá nhân với GVHD.
-- GitHub/Colab công khai: chưa tạo liên kết. Notebook local có thể upload trực tiếp vào Colab.
-- Báo cáo PDF: `reports/job_scam_report.pdf`; nguồn làm việc trên [Overleaf](https://www.overleaf.com/project/6aaa50614095f851ad080bca).
-- Gói vẫn cần bổ sung họ tên, MSSV, email, mã môn và xác nhận nộp cá nhân trước khi nộp chính thức.
+## Tài liệu tham khảo
 
-## Nguồn
+1. Vidros et al. (2017), *Automatic Detection of Online Recruitment Frauds*. [DOI](https://doi.org/10.3390/fi9010006)
+2. [EMSCAD / Real or Fake Fake Jobposting Prediction](https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction)
+3. Pennington, Socher & Manning (2014), [GloVe](https://nlp.stanford.edu/projects/glove/)
+4. [scikit-learn model evaluation](https://scikit-learn.org/stable/modules/model_evaluation.html)
 
-1. Vidros et al. (2017), *Automatic Detection of Online Recruitment Frauds*: https://doi.org/10.3390/fi9010006.
-2. Dataset mirror: https://www.kaggle.com/datasets/shivamb/real-or-fake-fake-jobposting-prediction.
-3. Pennington et al. (2014), *GloVe*: https://nlp.stanford.edu/projects/glove/.
-4. Vector distribution: https://github.com/piskvorky/gensim-data (tham khảo license riêng của vector trong metadata nguồn).
-5. Scikit-learn evaluation: https://scikit-learn.org/stable/modules/model_evaluation.html.
+---
 
-Code được hỗ trợ xây dựng bằng AI; người nộp cần đọc, chạy lại, hiểu và giải thích được lựa chọn phương pháp, kết quả và giới hạn, đồng thời tuân thủ quy định sử dụng AI của môn học nếu có.
+<div align="center"><sub>Được xây dựng cho học phần Học máy. Hãy chạy lại, đọc và hiểu pipeline trước khi sử dụng kết quả.</sub></div>

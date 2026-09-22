@@ -21,8 +21,7 @@
 
 | Tài nguyên | Liên kết |
 |---|---|
-| Mã nguồn GitHub | [duty00/job-scam-dectection](https://github.com/duty00/job-scam-dectection) |
-| Notebook chạy trực tiếp | [Mở bằng Google Colab](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb) |
+| Notebook | [Mở bằng Google Colab](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb) |
 | Báo cáo PDF | [Report.pdf](reports/Report.pdf) |
 
 ## Thông tin học phần

@@ -31,7 +31,7 @@
 | Hạng mục | Thông tin |
 |---|---|
 | Học phần | Học máy — Bài 2: Dữ liệu văn bản |
-| Mã môn | **Cần bổ sung trước khi nộp** |
+| Mã môn | CO3117 |
 | Học kỳ / năm học | Học kỳ I, 2026–2027 |
 | Giảng viên hướng dẫn | TS. Trương Vĩnh Lân |
 | Lớp / nhóm | A01 / 01 |
@@ -45,14 +45,12 @@
 
 ### Thông tin thành viên
 
-> **Cần điền email trước khi nộp.** Không tự suy đoán hoặc công khai email cá nhân khi chưa được nhóm cung cấp.
-
 | Họ và tên | MSSV | Email |
 |---|---:|---|
-| Dương Lê Nhật Duy | 2352171 | Cần bổ sung |
-| Trần Thiên Lộc | 2352715 | Cần bổ sung |
-| Nguyễn Huy Phúc | 2352937 | Cần bổ sung |
-| Đinh Đoàn Vy | 2353350 | Cần bổ sung |
+| Dương Lê Nhật Duy | 2352171 | @hcmut.edu.vn |
+| Trần Thiên Lộc | 2352715 | @hcmut.edu.vn |
+| Nguyễn Huy Phúc | 2352937 | @hcmut.edu.vn |
+| Đinh Đoàn Vy | 2353350 | @hcmut.edu.vn |
 
 ## Điểm nổi bật
 

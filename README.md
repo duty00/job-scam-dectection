@@ -11,7 +11,7 @@
 [![Best F1](https://img.shields.io/badge/best%20test%20F1-0.5507-7C3AED)](#kết-quả)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/duty00/job-scam-dectection/blob/main/notebooks/Job_Scam_Detection.ipynb)
 
-*Bài tập lớn môn Học máy · Khoa KH&KT Máy tính · ĐHQG-HCM*
+*Bài tập lớn môn Học máy · Khoa KH&KT Máy tính · HCMUT*
 
 </div>
 
